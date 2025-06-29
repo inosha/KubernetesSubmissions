@@ -1,2 +1,7 @@
 # KubernetesSubmissions
-AYTKT21027en - DevOps with Kubernetes from University of Helsinki 
+
+## Exercises
+
+### Chapter 2
+
+- [1.1.](https://github.com/inosha/KubernetesSubmissions/tree/1.1/log_output)
