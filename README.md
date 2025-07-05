@@ -12,3 +12,4 @@
 - [1.6.](https://github.com/inosha/KubernetesSubmissions/tree/1.6/the_project)
 - [1.7.](https://github.com/inosha/KubernetesSubmissions/tree/1.7/the_project)
 - [1.8.](https://github.com/inosha/KubernetesSubmissions/tree/1.8/log_output)
+- [1.9.](https://github.com/inosha/KubernetesSubmissions/tree/1.9/log_output)

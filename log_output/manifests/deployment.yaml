@@ -1,17 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: log-output-app
+  name: pingpong
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
-      app: log-output-app
+      app: pingpong
   template:
     metadata:
       labels:
-        app: log-output-app
+        app: pingpong
     spec:
       containers:
-        - name: log-output-app
-          image: inosha1/log_output_app:v1
+      - name: pingpong
+        image: inosha1/pingpong:latest
+        ports:
+        - containerPort: 3000

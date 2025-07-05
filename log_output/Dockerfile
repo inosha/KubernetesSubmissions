@@ -1,5 +1,7 @@
-FROM python:3.14.0b3-alpine3.21
+FROM node:20-alpine
 WORKDIR /usr/src/app
-COPY app.py .
-
-CMD ["python", "app.py"]
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 3000
+CMD ["node", "pingpong.js"]
