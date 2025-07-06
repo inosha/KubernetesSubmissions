@@ -1,7 +1,7 @@
 {
-  "name": "pingpong",
+  "name": "reader",
   "version": "1.0.0",
-  "main": "pingpong.js",
+  "main": "reader.js",
   "dependencies": {
     "express": "^4.18.2"
   }

@@ -1,7 +1,6 @@
 FROM node:20-alpine
 WORKDIR /usr/src/app
-COPY package*.json ./
+COPY reader.js package.json ./
 RUN npm install
-COPY . .
 EXPOSE 3000
-CMD ["node", "pingpong.js"]
+CMD ["node", "reader.js"]
