@@ -2,15 +2,40 @@ This project demonstrates a Kubernetes Pod running **two containers** (sidecar) 
 
 - **Writer Container:** Generates a random string at startup and appends a line with the string and a timestamp to a log file every 5 seconds.
 - **Reader Container:** Exposes an HTTP endpoint (`/`) that returns the current contents of the log file.
+- **pingpong Container:** Exposes an HTTP endpoint (`/pingpong`) that returns the pong <counter>.
 
 ## Architecture
 
 ```mermaid
-flowchart LR
-    Writer -- writes --> SharedVolume["Shared Volume: /logs/output.log"]
-    Reader["Reader (HTTP GET /logs)"] -- reads --> SharedVolume
+flowchart TD
+    subgraph "Pod: logoutput-dep"
+        writer["Container: writer"]
+        reader["Container: reader"]
+        writer -- Mounts /logs --> pv[(PersistentVolumeClaim: log-pvc)]
+        reader -- Mounts /logs --> pv
+    end
 
+    subgraph "Pod: pingpong-dep"
+        pingpong["Container: pingpong"]
+        pingpong -- Mounts /logs --> pv
+    end
+
+    pv -.->|Backed by PV| pvdef[(PersistentVolume)]
+
+    %% Services
+    logsvc["Service: log-output-svc\n(port 2345 → 3000)"]
+    pingsvc["Service: pingpong-svc\n(port 2345 → 3001)"]
+
+    reader -- Exposes 3000 --> logsvc
+    pingpong -- Exposes 3001 --> pingsvc
+
+    %% Ingress
+    ingress["Ingress: log-output-ing"]
+    ingress -- "/" --> logsvc
+    ingress -- "/pingpong" --> pingsvc
 ```
+
+ @ https://mermaid.live
 
 ## Usage
 
@@ -29,33 +54,26 @@ Reader
 
 `docker push dockerhub-user/reader:latest`
 
+pinpong
+
+`docker build -t dockerhub-user/reader:latest ./pingpong`
+
+`docker push dockerhub-user/pingpong:latest`
+
 ### 2. Deploy to Kubernetes
 
 Apply the manifests:
+
+`kubectl apply -f pv-pvc/*`
+
 
 `kubectl apply -f manifests/*`
 
 ### 3. Access the Logs
 
 If exposed via a service or ingress, access the logs at:
-[`http://localhost:8081`](http://localhost:8081)
+cumulative output : [`http://localhost:8081`](http://localhost:8081)
 
-```mermaid
-
-flowchart LR
-    client["Client<br>(Browser<br>localhost:8081)"]
-        -- "HTTP Request" --> portforward["Docker Desktop /<br>k3d Port mapping<br>(8081:80@loadbalancer)"]
-    portforward -- "Forwards to" --> ingress[Ingress]
-    ingress -- "routes to" --> service[Service]
-    service -- "forwards to" --> appPod["App Pod<br>(port 3000)"]
-
-    classDef k8s fill:#326ce5,stroke:#fff,stroke-width:2px,color:#fff;
-    class ingress,service,appPod k8s;
-    class client,portforward plain;
+pingpong endpoint: [`http://localhost:8081/pingpong`](http://localhost:8081/pingpong)
 
 
-```
-
-
-
- @ https://mermaid.live

@@ -1,31 +1,30 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: logoutput-dep
+  name: pingpong-dep
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: log-output
+      app: pingpong
   template:
     metadata:
       labels:
-        app: log-output
+        app: pingpong
     spec:
       volumes:
         - name: log-pv
           persistentVolumeClaim:
             claimName: log-pvc
       containers:
-        - name: writer
-          image: inosha1/writer:latest
-          volumeMounts:
-            - name: log-pv
-              mountPath: /logs
-        - name: reader
-          image: inosha1/reader:latest
+        - name: pingpong
+          image: inosha1/ping-pong:v3
+          imagePullPolicy: Always
           ports:
-            - containerPort: 3000
+            - containerPort: 3001
+          env:
+            - name: PORT
+              value: "3001"
           volumeMounts:
             - name: log-pv
               mountPath: /logs
