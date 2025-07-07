@@ -14,4 +14,11 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: inosha1/todo-app:latest
+          image: inosha1/todo-app:v2
+          volumeMounts:
+            - name: data
+              mountPath: /app/images   # 
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: picsum-pvc   # 
