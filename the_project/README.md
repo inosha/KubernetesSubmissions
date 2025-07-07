@@ -2,7 +2,7 @@
 
 This project provides an HTTP endpoint to serve an image at:
 
-- **Endpoint:** `http://localhost:8081/image`
+- **Endpoint:** `http://localhost:8081/`
 
 ## How to Deploy
 
