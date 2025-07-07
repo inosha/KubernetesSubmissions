@@ -15,6 +15,7 @@ spec:
       containers:
         - name: todo-app
           image: inosha1/todo-app:v2
+          imagePullPolicy: Always
           volumeMounts:
             - name: data
               mountPath: /app/images   # 

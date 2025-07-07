@@ -37,7 +37,7 @@ app.get('/current-image', (req, res) => {
   res.sendFile(IMAGE_PATH);
 });
 
-app.get('/image', async (req, res) => {
+app.get('/', async (req, res) => {
   const now = Date.now();
   if (!fs.existsSync(IMAGE_PATH) || (now - cachedAt > CACHE_DURATION && servedAfterExpiry)) {
     await fetchAndSaveImage();
