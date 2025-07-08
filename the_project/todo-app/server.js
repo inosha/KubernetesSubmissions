@@ -44,13 +44,21 @@ app.get('/', async (req, res) => {
   } else if (now - cachedAt > CACHE_DURATION && !servedAfterExpiry) {
     servedAfterExpiry = true;
   }
+
+  // Hardcoded todos
+  const hardcodedTodos = [
+    "Learn Kubernetes basics",
+    "Write deployment.yaml for project",
+    "Test Docker volume persistence"
+  ];
+
   // Serve an HTML page with heading, image, and caption
   res.send(`
     <!DOCTYPE html>
     <html lang="en">
       <head>
         <meta charset="UTF-8">
-        <title>The project App</title>
+        <title>The project app</title>
         <style>
           body {
             font-family: sans-serif;
@@ -78,17 +86,91 @@ app.get('/', async (req, res) => {
             color: #555;
             text-align: left;
           }
+          .todo-section {
+            margin-top: 40px;
+            padding: 24px;
+            background: #f8f8f8;
+            border-radius: 8px;
+            max-width: 600px;
+          }
+          .todo-input {
+            width: 70%;
+            padding: 8px;
+            font-size: 1em;
+            margin-right: 8px;
+          }
+          .todo-send {
+            padding: 8px 16px;
+            font-size: 1em;
+          }
+          .todo-list {
+            margin-top: 24px;
+            padding-left: 20px;
+          }
+          .todo-list li {
+            margin-bottom: 8px;
+          }
+          .error {
+            color: #b00;
+            font-size: 0.95em;
+            margin-top: 8px;
+          }
         </style>
       </head>
       <body>
         <div class="container">
-          <h1>The project App</h1>
+          <h1>The project app</h1>
           <img src="/current-image" alt="Random Image" class="project-image" />
-          <div class="caption">DevOps with Kubernetes 2025</div>
+          <div class="caption">devops with kubernetes 2025</div>
+          <div class="todo-section">
+            <h2>Todo List</h2>
+            <form id="todo-form" autocomplete="off" onsubmit="return false;">
+              <input 
+                type="text" 
+                id="todo-input" 
+                class="todo-input" 
+                maxlength="140" 
+                placeholder="Add a new todo (max 140 chars)" 
+                required
+              />
+              <button class="todo-send" id="todo-send" type="submit">Send</button>
+              <div id="error-msg" class="error" style="display:none;"></div>
+            </form>
+            <ul class="todo-list" id="todo-list">
+              ${hardcodedTodos.map(todo => `<li>${todo}</li>`).join('')}
+            </ul>
+          </div>
         </div>
+        <script>
+          const input = document.getElementById('todo-input');
+          const form = document.getElementById('todo-form');
+          const errorMsg = document.getElementById('error-msg');
+
+          form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (input.value.length > 140) {
+              errorMsg.textContent = "Todo cannot be more than 140 characters.";
+              errorMsg.style.display = "block";
+            } else {
+              errorMsg.style.display = "none";
+              // Not sending the todo yet
+              input.value = '';
+            }
+          });
+
+          input.addEventListener('input', function() {
+            if (input.value.length > 140) {
+              errorMsg.textContent = "Todo cannot be more than 140 characters.";
+              errorMsg.style.display = "block";
+            } else {
+              errorMsg.style.display = "none";
+            }
+          });
+        </script>
       </body>
     </html>
   `);
+
 });
 
 
