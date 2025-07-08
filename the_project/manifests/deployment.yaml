@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: inosha1/todo-app:v2
+          image: inosha1/todo-app:v3
           imagePullPolicy: Always
           volumeMounts:
             - name: data

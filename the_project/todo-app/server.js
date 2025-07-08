@@ -58,7 +58,7 @@ app.get('/', async (req, res) => {
     <html lang="en">
       <head>
         <meta charset="UTF-8">
-        <title>The project app</title>
+        <title>The project App</title>
         <style>
           body {
             font-family: sans-serif;
@@ -119,9 +119,9 @@ app.get('/', async (req, res) => {
       </head>
       <body>
         <div class="container">
-          <h1>The project app</h1>
+          <h1>The project App</h1>
           <img src="/current-image" alt="Random Image" class="project-image" />
-          <div class="caption">devops with kubernetes 2025</div>
+          <div class="caption">DevOps with Kubernetes 2025</div>
           <div class="todo-section">
             <h2>Todo List</h2>
             <form id="todo-form" autocomplete="off" onsubmit="return false;">
