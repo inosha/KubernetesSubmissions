@@ -1,8 +1,0 @@
-{
-  "name": "reader",
-  "version": "1.0.0",
-  "main": "reader.js",
-  "dependencies": {
-    "express": "^4.18.2"
-  }
-}
