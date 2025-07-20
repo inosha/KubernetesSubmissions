@@ -24,7 +24,7 @@ app.post('/todos', (req, res) => {
   res.status(201).json({ todo });
 });
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
   console.log(`Todo-backend listening on port ${PORT}`);
 });

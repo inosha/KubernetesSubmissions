@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const TODO_BACKEND_URL = process.env.TODO_BACKEND_URL || 'http://localhost:4000';
 
 
