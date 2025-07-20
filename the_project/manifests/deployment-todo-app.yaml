@@ -1,3 +1,4 @@
+# todo-app:v4 frontend
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -14,11 +15,16 @@ spec:
     spec:
       containers:
         - name: todo-app
-          image: inosha1/todo-app:v3
+          image: inosha1/todo-app:v4
           imagePullPolicy: Always
           volumeMounts:
             - name: data
               mountPath: /app/images   # 
+          env:
+            - name: PORT
+              value: "3000"
+            - name: TODO_BACKEND_URL
+              value: "http://localhost:8081/todos"
       volumes:
         - name: data
           persistentVolumeClaim:

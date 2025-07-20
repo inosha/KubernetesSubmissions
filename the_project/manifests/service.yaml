@@ -1,3 +1,4 @@
+# todo-app frontend
 apiVersion: v1
 kind: Service
 metadata:
@@ -10,3 +11,19 @@ spec:
     - port: 2345
       protocol: TCP
       targetPort: 3000
+
+---
+# todo-app backend
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: todo-backend-svc
+spec:
+  type: ClusterIP
+  selector:
+    app: todo-backend
+  ports:
+    - port: 2345
+      protocol: TCP
+      targetPort: 4000
