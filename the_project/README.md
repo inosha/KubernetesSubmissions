@@ -15,3 +15,10 @@ Apply the Kubernetes manifests using:
 
 ## Architecture
 ![alt text](image.png)
+
+## Verify
+
+Check that the applications are running in the new namespace:
+
+
+kubectl get pods --namespace=project
