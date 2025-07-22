@@ -28,3 +28,10 @@ cumulative output : [`http://localhost:8081`](http://localhost:8081)
 pingpong endpoint: [`http://localhost:8081/pingpong`](http://localhost:8081/pingpong)
 
 ![output](image.png)
+
+### 3. Verify
+
+Check that the applications are running in the new namespace:
+
+
+kubectl get pods --namespace=exercises
