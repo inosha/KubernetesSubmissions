@@ -19,6 +19,12 @@ spec:
         - name: todo-backend
           image: inosha1/todo-backend:v1
           imagePullPolicy: Always
+          # env:
+          #   - name: PORT
+          #     value: "4000"
           env:
             - name: PORT
-              value: "4000"
+              valueFrom:
+                configMapKeyRef:
+                  name: configmap-todo-backend
+                  key: PORT

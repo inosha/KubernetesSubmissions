@@ -22,11 +22,9 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /app/images   # 
-          env:
-            - name: PORT
-              value: "3000"
-            - name: TODO_BACKEND_URL
-              value: "http://localhost:8081/"
+          envFrom:
+            - configMapRef:
+                name: configmap-todo-app
       volumes:
         - name: data
           persistentVolumeClaim:
