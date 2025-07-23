@@ -8,6 +8,11 @@ This project demonstrates a Kubernetes Pods running and communicate via network 
 
 - **ping-pong-app pod:** Exposes via HTTP endpoint (`/pingpong`) that returns the pong <counter>.
 
+- **ConfigMap** for `information.txt` holds file content.
+
+- **env variable MESSAGE** holds `hello world`.
+
+
 ## Architecture
 
 ![architecture](image2.png)
@@ -27,7 +32,7 @@ cumulative output : [`http://localhost:8081`](http://localhost:8081)
 
 pingpong endpoint: [`http://localhost:8081/pingpong`](http://localhost:8081/pingpong)
 
-![output](image.png)
+![output](image-1.png)
 
 ### 3. Verify
 

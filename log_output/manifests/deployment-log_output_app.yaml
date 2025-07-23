@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: log-output-app
-          image: inosha1/log_output_app:v3
+          image: inosha1/log_output_app:v4
           imagePullPolicy: Always
           ports:
             - containerPort: 3001
@@ -24,3 +24,13 @@ spec:
               value: "3001"
             - name: PING_URL
               value: "http://ping-pong-app-svc:2345/pings"
+            - name: MESSAGE
+              value: "hello world"
+          volumeMounts:
+            - name: config-volume
+              mountPath: /vol
+              
+      volumes:
+        - name: config-volume
+          configMap:
+            name: log-output-config
