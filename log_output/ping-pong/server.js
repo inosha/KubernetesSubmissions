@@ -1,30 +1,46 @@
 const express = require('express');
-const fs = require('fs');
+const { Pool } = require('pg');
 const app = express();
-// const LOG_FILE = '/logs/output.log'; //log output file
-let counter = 0;
+
+const pool = new Pool({
+  user: 'pingpong',
+  host: 'postgres.default.svc.cluster.local',
+  database: 'pingpong',
+  password: 'pingpong',
+  port: 5432,
+});
+
+// Ensure table exists (for local dev, in prod use migrations)
+pool.query(`
+  CREATE TABLE IF NOT EXISTS counts (
+    id SERIAL PRIMARY KEY,
+    counter INTEGER NOT NULL
+  );
+  INSERT INTO counts (counter) SELECT 0 WHERE NOT EXISTS (SELECT * FROM counts);
+`).catch(console.error);
+
+app.get('/pingpong', async (req, res) => {
+  try {
+    await pool.query('UPDATE counts SET counter = counter + 1 WHERE id = 1');
+    const result = await pool.query('SELECT counter FROM counts WHERE id = 1');
+    res.send(`pings: ${result.rows[0].counter}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Database error');
+  }
+});
+
+app.get('/pings', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT counter FROM counts WHERE id = 1');
+    res.send(`pings: ${result.rows[0].counter}`);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Database error');
+  }
+});
+
 const PORT = process.env.PORT || 3000;
-
-
-app.get('/pingpong', (req, res) => {
-  counter++;
-  const output = `ping / pongs ${counter}`;
-  res.send(output);
-
-  // // Append the output to file (@PV) 
-  // fs.appendFile(LOG_FILE, output + '\n', (err) => {
-  //   if (err) {
-  //     console.error('Failed to write to log file:', err);
-  //   }
-  // });
-});
-
-// New endpoint to get current pong count without incrementing:
-app.get('/pings', (req, res) => {
-  const pong_output = `ping / pongs ${counter}`;
-  res.send(pong_output);
-});
-
 app.listen(PORT, () => {
   console.log(`Pingpong app listening on port ${PORT}`);
 });
