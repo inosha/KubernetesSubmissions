@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: app
-        image: inosha1/todo-backend:v2
+        image: inosha1/todo-backend:v3
         imagePullPolicy: Always
         ports:
         - containerPort: 4000
