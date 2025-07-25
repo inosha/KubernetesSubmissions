@@ -4,7 +4,6 @@ kind: Deployment
 metadata:
   name: todo-backend
   namespace: project
-
 spec:
   replicas: 1
   selector:
@@ -16,15 +15,35 @@ spec:
         app: todo-backend
     spec:
       containers:
-        - name: todo-backend
-          image: inosha1/todo-backend:v1
-          imagePullPolicy: Always
-          # env:
-          #   - name: PORT
-          #     value: "4000"
-          env:
-            - name: PORT
-              valueFrom:
-                configMapKeyRef:
-                  name: configmap-todo-backend
-                  key: PORT
+      - name: app
+        image: inosha1/todo-backend:v2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 4000
+        envFrom:
+        - configMapRef:
+            name: todo-backend-config
+        - secretRef:
+            name: todo-backend-secret
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: todo-backend-secret
+  namespace: project
+type: Opaque
+data:
+  DB_PASSWORD: cGFzc3dvcmQ=
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: todo-backend-config
+  namespace: project
+data:
+  DB_USER: todouser
+  DB_NAME: tododb
+  DB_HOST: todo-db
+  DB_PORT: "5432"
+  PORT: "4000"
+
