@@ -3,11 +3,11 @@ const { Pool } = require('pg');
 const app = express();
 
 const pool = new Pool({
-  user: 'pingpong',
-  host: 'postgres.default.svc.cluster.local',
-  database: 'pingpong',
-  password: 'pingpong',
-  port: 5432,
+  user: process.env.PGUSER,
+  host: process.env.PGHOST,
+  database: process.env.PGDATABASE,
+  password: process.env.PGPASSWORD,
+  port: process.env.PGPORT ? parseInt(process.env.PGPORT) : 5432,
 });
 
 // Ensure table exists (for local dev, in prod use migrations)

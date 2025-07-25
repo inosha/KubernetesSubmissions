@@ -23,4 +23,23 @@ spec:
           env:
             - name: PORT
               value: "3000"
+            - name: PGUSER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_USER
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_PASSWORD
+            - name: PGDATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: POSTGRES_DB
+            - name: PGHOST
+              value: "postgres.exercises.svc.cluster.local"   # namespace 'exercises'
+            - name: PGPORT
+              value: "5432"
 
