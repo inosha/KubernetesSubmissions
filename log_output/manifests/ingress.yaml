@@ -14,18 +14,19 @@ spec:
           service:
             name: log-output-app-svc
             port:
-              number: 2345
+              number: 80
       - path: /pings
         pathType: Prefix
         backend:
           service:
             name: ping-pong-app-svc
             port:
-              number: 2345
+              number: 80
       - path: /pingpong
         pathType: Prefix
         backend:
           service:
             name: ping-pong-app-svc
             port:
-              number: 2345
+              number: 80
+# PGPASSWORD=pingpong psql -h postgres.exercises.svc.cluster.local -U pingpong -d pingpong

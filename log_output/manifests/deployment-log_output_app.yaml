@@ -29,7 +29,6 @@ spec:
           volumeMounts:
             - name: config-volume
               mountPath: /vol
-              
       volumes:
         - name: config-volume
           configMap:
