@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: ping-pong-app-dep
   namespace: exercises
-
 spec:
   replicas: 1
   selector:
@@ -43,3 +42,18 @@ spec:
             - name: PGPORT
               value: "5432"
 
+---
+# LoadBalancer
+apiVersion: v1
+kind: Service
+metadata:
+  name: ping-pong-app-svc
+  namespace: exercises
+spec:
+  type: LoadBalancer
+  selector:  
+    app: ping-pong-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
