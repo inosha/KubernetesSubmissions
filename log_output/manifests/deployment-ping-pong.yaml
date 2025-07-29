@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: ping-pong-app
-          image: inosha1/ping-pong:v5
+          image: inosha1/ping-pong:v6
           imagePullPolicy: Always
           ports:
             - containerPort: 3000

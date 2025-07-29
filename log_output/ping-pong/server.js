@@ -19,7 +19,7 @@ pool.query(`
   INSERT INTO counts (counter) SELECT 0 WHERE NOT EXISTS (SELECT * FROM counts);
 `).catch(console.error);
 
-app.get('/pingpong', async (req, res) => {
+app.get('/', async (req, res) => {
   try {
     await pool.query('UPDATE counts SET counter = counter + 1 WHERE id = 1');
     const result = await pool.query('SELECT counter FROM counts WHERE id = 1');
