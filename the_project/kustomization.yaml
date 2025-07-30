@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+    -manifests/configmap-todo-app.yaml
+    -manifests/pvc.yaml
+    -manifests/deployment-todo-app.yaml
+    -manifests/random-todo-cronjob.yaml
+    -manifests/deployment-todo-backend.yaml
+    -manifests/service.yaml
+    -manifests/ingress.yaml
+    -manifests/todo-db-statefulset.yaml
+    -manifests/pv.yaml

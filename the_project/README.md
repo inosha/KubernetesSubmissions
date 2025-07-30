@@ -8,8 +8,7 @@ This project server at HTTP endpoint :
 
 Apply the Kubernetes manifests using:
 
-`kubectl apply -f ./manifests`
+`kubectl kustomize .`	Builds and prints the rendered YAML manifests
 
 
-## Monitoring 
-![alt text](image-1.png)
+`kubectl apply -k .`	Builds and applies the manifests to the connected cluster
